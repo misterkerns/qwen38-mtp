@@ -15,3 +15,4 @@ Per-card-family deep dives, contributor-authored. The main [README](../README.md
 - [Apple Silicon](apple-silicon.md), 5 sections
 - [CMP 170HX](cmp-170hx.md), 1 section
 - [CMP 50HX](cmp-50hx.md), 1 section
+- [Instinct (CDNA)](instinct-cdna.md), 1 section
