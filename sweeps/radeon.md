@@ -225,6 +225,18 @@ Q4_0 is **+15%** unassisted and **+10%** with the flag. llama-bench on the same 
 
 A 2026-09-03 n-max 3 pass read **64.3** overall (74.4 / 46.0 / 64.3). Python matched today's 74.4; overall moved with bash. The table uses the 2026-09-09 pair because that is the spec-off + spec-on set with an acceptance log, Harbor stopped on both arms.
 
-**Quality vs Dynamic XL is unmeasured.** This row is not a recommendation to abandon UD-Q4_K_XL; it is a driver/kernel observation that plain INT4 is the faster 4-bit file on this proprietary Vulkan stack.
+**Quality vs Dynamic XL, same b10711 binary, Harbor stopped, greedy temp 0 seed 1, spec-off:**
+
+| | XL | Q4_0 |
+|---|---|---|
+| wiki PPL (16×512 chunks) | **7.11 ± 0.28** | 7.20 ± 0.28 |
+| probe-py merge | correct two-pointer | correct two-pointer |
+| mmap vs read | correct | correct |
+| bash watch | polling+comm, has trap | polling+comm, no trap |
+| Stop-HarborGpu | truncated at 450 tok | truncated at 450 tok |
+| JSON-only | `{"name":"Qwen","count":27}` | identical |
+| kth unique | correct + tests | correct + tests |
+
+PPL +1.3% is inside the error bar. Six greedy prompts did not show a Q4_0 collapse. This is still not a long-agent eval, so the row is not a recommendation to abandon UD-Q4_K_XL — it is a driver/kernel observation that plain INT4 is the faster 4-bit file on this proprietary Vulkan stack.
 
 Method: unchanged `probe.py` at `a4c3028`, 3×3, thinking off, warmup discarded, `--parallel 1`. llama.cpp WinGet b10711 (`9723942ad`) win-vulkan-x64. sha256 `ede16c7b…4e671d`.
